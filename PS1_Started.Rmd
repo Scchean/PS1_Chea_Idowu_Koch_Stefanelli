@@ -9,12 +9,13 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-**Group Member 1: Your name here**
+**Group Member 1: Chean Shea**
 
-**Group Member 2: Your name here**
+**Group Member 2: Mayowa Idowu**
 
-**Group Member 3: Your name here**
+**Group Member 3: Milan Stefanelli**
 
+**Group Member 4: Kiersten Kochanowski**
 
 
 In additions, to the instructions given on the problem set, you may find the "GitHub instructions" course document helpful.
@@ -70,6 +71,7 @@ So that you have full access to this content you will:
 
 Let's copy the course repo onto your own GitHub page so that you can freely work on it.
 
+
 To do this you want to fork (ie copy) the entire course repo
 
   1. Navigate into the course repository 
@@ -84,7 +86,7 @@ If you would like to rename the repo:
   3. Type in a new name and click Rename.
 
 ### Clone this forked repository to your computer
-
+git 
 If you want to have access to the course files when you are offline, you will need to clone (ie copy) the files in this repo to your local machine:
 
   1. Make an empty folder named, for example, `MQE_Causal_Inf` where you will put the files you are going to pull off GitHub (preferably in Dropbox or someplace where it will be backed up).
@@ -126,6 +128,7 @@ To make sure the course folder on your computer reflect the most recent changes 
      `$ cd /c/Users/ *******/filepath`
 
 2. List the current configured remote repository for your folder:
+[]
      `$ git remote -v `
     
       `> origin  https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)`
@@ -264,6 +267,7 @@ Now that your edits appear in your GitHub repository, you need to propose those 
 
 
 **Congratulatons! You have now practiced most of the key actions needed to work collaboratively with GitHub and Git. The way group projects are run on this platform is illustrated in the image below. Your group will have a central repository in which you are all collaborators. Each group member (other then the one hosting the central repository) will have their own fork (copy) of the repository on their own GitHub account. This copy will be cloned to your local machine (using Git) and then set up so that it syncs with the upstream central repo. 
+
 When you want to work on your group assignment you will open the Git command window and sync your local folder with the central repo so that any changes your groupmates made are reflected on your local machine. You can then do your coding and work on your local machine, and once you know that your code runs, you will push your changes to your fork, and then submit a pull request and merge you change to the central repo. For more detailed step by step instructions, and instructions on some other actions you may need to use, check out the GitHub_instructions document in the course folder.**
 
 
@@ -423,6 +427,12 @@ out$Y<-out$V1*B1+out$V2*B2+out$error
 
 **Answer:**
 
+```{r}
+View(out)
+M1 <- lm(data=out, Y ~ V1 + V2)
+summary(M1)
+```
+
 
 **Question 2: Write a chunk in which you regress $Y$ on $V_1$ only. Is your estimate of $\beta_1$ biased?**
 
@@ -446,7 +456,6 @@ out$Y<-out$V1*B1+out$V2*B2+out$error
 #plotted
 
 ```
-
 
 # Submission instructions:
 
