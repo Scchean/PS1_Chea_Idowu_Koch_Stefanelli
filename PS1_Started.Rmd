@@ -1,9 +1,10 @@
 ---
-title: 'Problem Set 1:Getting Started Key'
+title: "Problem Set 1:Getting Started Key"
 author: "Claire Duquennois"
 output:
+  pdf_document: default
   html_document:
-    number_sections: true
+    number_sections: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -470,6 +471,16 @@ plotted<-ggplot(out, aes(V1, y = value, color = variable)) +
 plotted 
 
 ```
+\newpage
+```{r}
+library(stargazer)
+visual1 <- stargazer(M2, M3, type="text", header=FALSE, title="OVB vs No OVB", 
+                     style="qje", 
+                     column.labels = c("Model w/OVB bias", "Model w/o OVB bias" ),
+                     covariate.labels = c("B1", "Intercept"),
+                     dep.var.caption="Outcome (Y)")
+```
+
 
 # Submission instructions:
 
