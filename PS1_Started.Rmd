@@ -425,7 +425,7 @@ out$Y<-out$V1*B1+out$V2*B2+out$error
 
 **Question 1: Write a chunk in which you regress $Y$ on $V_1$ and $V_2$. Are your estimates of $\beta_1$ and $\beta_2$ biased?**
 
-**Answer:**
+**Answer:** No our data was randomly generated (within parameters) so their coefficients are not bias
 
 ```{r}
 View(out)
@@ -436,24 +436,38 @@ summary(M1)
 
 **Question 2: Write a chunk in which you regress $Y$ on $V_1$ only. Is your estimate of $\beta_1$ biased?**
 
-**Answer:**
+**Answer:** Yes, our beta 1 coefficient is biased due to OVB. By omitting V2, our beta 1 coefficient has upward bias (larger than it would be with V2 in the model: 7.87 vs 3.045). 
+
+```{r}
+M2 <- lm(data=out, Y~V1)
+summary(M2)
+```
 
 
 **Question 3: Generate a new variable $Y_{adj}$ such that $Y_{adj}=Y-\beta_2*V_2$. Then regress $Y_{adj}$ on $V_1$. Is your estimate of $\beta_1$ biased? Can you explain why/why not?**
 
-**Answer:**
+**Answer:** No, beta one is not biased in this model. We can see that the coefficient is very similar to model #1 where beta two was also included (3.072 vs 3.045). We can also affirm this mathematically given the relationship below
 
+Y-B2V2 = B1V1 (Model #3), which is equal to Y=B1V1 + B2V2 (Model #1)
 
-**Question 4: The code below generates a scatter plot and regression line for the relationship between $V_1$ and $Y$ as well as $V_1$ and $Y_{adj}$. Submit an improved visualization of this data. Hint: you will need to delete the # to get the code to run **
+```{r}
+Y_adj <- ((out$Y)-(B2*out$V2))
+
+M3 <- lm(data=out, Y_adj ~ V1)
+summary(M3)
+```
+
+**Question 4: The code below generates a scatter plot and regression line for the relationship between $V_1$ and $Y$ as well as $V_1$ and $Y_{adj}$. Submit an improved visualization of this data. Hint: you will need to delete the # to get the code to run**
 
 ```{r key 4}
-#plotted<-ggplot(out, aes(V1, y = value, color = variable)) + 
-#    geom_point(aes(y = Y, col = "Y")) + 
-#    geom_point(aes(y = adjY, col = "adjY"))+
-#    geom_smooth(method='lm', aes(y = Y, col = "Y"))+
-#    geom_smooth(method='lm', aes(y = adjY, col = "Y"))
 
-#plotted
+plotted<-ggplot(out, aes(V1, y = value, color = variable)) + 
+   geom_point(aes(y = Y, col = "Y")) + 
+   geom_point(aes(y = Y_adj, col = "Y_adj"))+
+   geom_smooth(method='lm', aes(y = Y, col = "Y"))+
+   geom_smooth(method='lm', aes(y = Y_adj, col = "Y"))
+
+plotted 
 
 ```
 
