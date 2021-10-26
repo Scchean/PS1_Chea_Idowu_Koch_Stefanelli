@@ -2,9 +2,9 @@
 title: "Problem Set 1:Getting Started Key"
 author: "Claire Duquennois"
 output:
-  pdf_document: default
   html_document:
     number_sections: yes
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -453,7 +453,6 @@ Y-B2V2 = B1V1 (Model #3), which is equal to Y=B1V1 + B2V2 (Model #1)
 
 ```{r}
 Y_adj <- ((out$Y)-(B2*out$V2))
-
 M3 <- lm(data=out, Y_adj ~ V1)
 summary(M3)
 ```
@@ -474,11 +473,12 @@ plotted
 \newpage
 ```{r}
 library(stargazer)
-visual1 <- stargazer(M2, M3, type="text", header=FALSE, title="OVB vs No OVB", 
+visual1 <- stargazer(M2, M3, type="latex", header=FALSE, title="OVB vs No OVB", 
                      style="qje", 
                      column.labels = c("Model w/OVB bias", "Model w/o OVB bias" ),
                      covariate.labels = c("B1", "Intercept"),
                      dep.var.caption="Outcome (Y)")
+
 ```
 
 
