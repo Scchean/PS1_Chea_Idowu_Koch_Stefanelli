@@ -426,28 +426,39 @@ out$Y<-out$V1*B1+out$V2*B2+out$error
 
 **Question 1: Write a chunk in which you regress $Y$ on $V_1$ and $V_2$. Are your estimates of $\beta_1$ and $\beta_2$ biased?**
 
-**Answer:** No our data was randomly generated (within parameters) so their coefficients are not bias
+**Answer:** No, our data was randomly generated (within parameters) so their coefficients are not bias. This is also affirmed by the fact that the V1 and V2 coefficients in our regression model are almost identical to the one B1 and B2 generated above.
 
 ```{r}
 View(out)
 M1 <- lm(data=out, Y ~ V1 + V2)
 summary(M1)
+
+library(stargazer)
+visual1 <- stargazer(M1, type="html", header=FALSE, title="Regression 1", 
+                     style="qje", 
+                     covariate.labels = c("B1", "B2", "Intercept"),
+                     dep.var.caption="Outcome (Y)")
 ```
 
 
 **Question 2: Write a chunk in which you regress $Y$ on $V_1$ only. Is your estimate of $\beta_1$ biased?**
 
-**Answer:** Yes, our beta 1 coefficient is biased due to OVB. By omitting V2, our beta 1 coefficient has upward bias (larger than it would be with V2 in the model: 7.87 vs 3.045). 
+**Answer:** Yes, our beta 1 (V1) coefficient is biased due to omitted variable bias. By omitting V2, our beta 1 coefficient has upward bias (larger than it would be with V2 in the model: 7.87 vs 3.045). 
 
 ```{r}
 M2 <- lm(data=out, Y~V1)
 summary(M2)
-```
 
+library(stargazer)
+visual1 <- stargazer(M2, type="html", header=FALSE, title="Regression 2", 
+                     style="qje", 
+                     covariate.labels = c("B1", "Intercept"),
+                     dep.var.caption="Outcome (Y)")
+```
 
 **Question 3: Generate a new variable $Y_{adj}$ such that $Y_{adj}=Y-\beta_2*V_2$. Then regress $Y_{adj}$ on $V_1$. Is your estimate of $\beta_1$ biased? Can you explain why/why not?**
 
-**Answer:** No, beta one is not biased in this model. We can see that the coefficient is very similar to model #1 where beta two was also included (3.072 vs 3.045). We can also affirm this mathematically given the relationship below
+**Answer:** No, beta 1 is not biased in this model. We can see that the coefficient is very similar to model #1 where beta two was also included (3.072 vs 3.045). We can also affirm this mathematically given the relationship below
 
 Y-B2V2 = B1V1 (Model #3), which is equal to Y=B1V1 + B2V2 (Model #1)
 
@@ -468,26 +479,36 @@ plotted<-ggplot(out, aes(V1, y = value, color = variable)) +
    geom_smooth(method='lm', aes(y = Y_adj, col = "Y"))
 
 plotted 
-
 ```
+
 \newpage
+
 ```{r}
 library(stargazer)
-visual1 <- stargazer(M2, M3, type="latex", header=FALSE, title="OVB vs No OVB", 
+visual1 <- stargazer(M2, M3, type="html", header=FALSE, title="OVB vs No OVB", 
                      style="qje", 
                      column.labels = c("Model w/OVB bias", "Model w/o OVB bias" ),
                      covariate.labels = c("B1", "Intercept"),
                      dep.var.caption="Outcome (Y)")
-
 ```
 
+\newpage
+
+```{r}
+install.packages("ggstance")
+library(GGally)
+library(ggplot2)
+library(jtools)
+
+```
+```{r}
+data_vis <- plot_coefs(M1, M2, omit.coefs =c("(Intercept)","V2"), title= )
+data_vis + coord_flip()
+```
 
 # Submission instructions:
 
 1) Make sure the final version of your assignment is uploaded on GitHub in both html and Rmarkdown format. 
-
-
-
 
 
 
