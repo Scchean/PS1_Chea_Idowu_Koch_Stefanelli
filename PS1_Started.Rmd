@@ -58,7 +58,6 @@ out$Y<-out$V1*B1+out$V2*B2+out$error
 library(stargazer)
 ```
 
-
 ```{r}
 View(out)
 M1 <- lm(data=out, Y ~ V1 + V2)
@@ -123,8 +122,32 @@ library(jtools)
 library(broom.mixed)
 ```
 
-**New Data Visualization**
-We interpreted the provided visual to be describing the relationship between V1 and Y with and without omitted variable bias (OVB). A simpler way to put OVB into perspective is by illustrating the difference in the V1 coefficient (and its relationship to Y) when it is and isn't biased by missing variable V2. 
+**New Data Visualizations**
+We interpreted the provided visual to be describing the relationship between V1 and Y with and without omitted variable bias (OVB). Our first visual makes this argument more clear by indicating which LOBF was influenced by OVB, using the same scatter plot method.
+
+```{r}
+plotted<-ggplot(out, aes(V1, y = value, color = variable)) + 
+   geom_point(aes(y = Y, col = "Y"), alpha = .1) + 
+   geom_point(aes(y = Y_adj, col = "Y_adj"), alpha = .1)+
+   geom_smooth(method='lm', aes(y = Y, col = "Y"))+
+   geom_smooth(method='lm', aes(y = Y_adj, col = "Y_adj")) +
+   scale_color_manual(values=c("Purple","Black")) +
+   labs(title = "Relationship Between Variables") +
+   geom_label(
+    label="Omitted Variable Bias", 
+    x=-2,
+    y=10,
+    label.padding = unit(0.55, "lines"), # Rectangle size around label
+    label.size = 0.35,
+    color = "black",
+    fill="#BA8CB2"
+  )
+
+plotted 
+```
+
+Our second visual takes an even simpler approach by illustrating the difference in the V1 coefficient (and its relationship to Y) when it is and isn't biased by missing variable V2. 
+
 ```{r}
 data_vis <- plot_coefs(M2, M3, omit.coefs =c("(Intercept)","V2"), model.names=c("OVB", "No OVB"))
 data_vis2 <- data_vis + coord_flip()
