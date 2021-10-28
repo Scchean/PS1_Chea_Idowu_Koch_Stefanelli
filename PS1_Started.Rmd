@@ -3,8 +3,6 @@ title: "Problem Set 1"
 author: "Professor: Dr. Claire Duquennois"
 output:
   html_document: default
-    number_sections: yes
-  pdf_document: 
 ---
 
 ```{r setup, include=FALSE}
@@ -18,13 +16,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Group Member 4: Kiersten Kochanowski**
 
-
+<span style="color: green;">Neil's comments in green</span>
 
 # Omitted Variable Bias Simulation (Group excercise)
 
 ```{r sim1,  warning=FALSE}
-library(MASS)
-library(ggplot2)
+ library(MASS)
+ library(ggplot2)
 
 out <- as.data.frame(mvrnorm(1000, mu = c(0,0), 
                      Sigma = matrix(c(1,0.8,0.8,1), ncol = 2), 
@@ -55,7 +53,7 @@ out$Y<-out$V1*B1+out$V2*B2+out$error
 **Answer:** No, our data was randomly generated (within parameters) so their coefficients are not bias. This is also affirmed by the fact that the V1 and V2 coefficients in our regression model are almost identical to the one B1 and B2 generated above.
 
 ```{r include=FALSE}
-library(stargazer)
+ library(stargazer)
 ```
 
 ```{r}
@@ -71,7 +69,7 @@ stargazer(M1, type="text", header=FALSE, title="Regression Coefficients",
 
 **Question 2: Write a chunk in which you regress $Y$ on $V_1$ only. Is your estimate of $\beta_1$ biased?**
 
-**Answer:** Yes, our beta 1 (V1) coefficient is biased due to omitted variable bias. By omitting V2, our beta 1 coefficient has upward bias (larger than it would be with V2 in the model: 7.81 vs 2.93). 
+**Answer:** Yes, our beta 1 (V1) coefficient is biased due to omitted variable bias. By omitting V2, our beta 1 coefficient has upward bias (larger than it would be with V2 in the model: 7.81 vs 2.93). <span style="color: green;">Additionally, you know the true value of $\beta_1$ is $3$. </span>
 
 ```{r}
 M2 <- lm(data=out, Y~V1)
@@ -113,16 +111,16 @@ plotted
 
 \newpage
 ```{r include=FALSE}
-install.packages("ggstance", repos = "http://cran.us.r-project.org" )
-install.packages("jtools", repos = "http://cran.us.r-project.org")
-install.packages("broom.mixed", repos = "http://cran.us.r-project.org")
+# install.packages("ggstance", repos = "http://cran.us.r-project.org" )
+# install.packages("jtools", repos = "http://cran.us.r-project.org")
+# install.packages("broom.mixed", repos = "http://cran.us.r-project.org")
 library(GGally)
 library(jtools)
 library(broom.mixed)
 ```
-
+<span style="color: green;">Its best practice to only install packages once. Either do so locally (not included in rmarkdown file) or do so and then comment out.</span>
 **New Data Visualizations**
-We interpreted the provided visual to be describing the relationship between V1 and Y with and without omitted variable bias (OVB). Our first visual makes this argument more clear by indicating which LOBF was influenced by OVB, using the same scatter plot method.
+We interpreted the provided visual to be describing the relationship between V1 and Y with and without omitted variable bias (OVB). Our first visual makes this argument more clear by indicating which LOBF was influenced by OVB, using the same scatter plot method. <span style="color: green;">I'm not following. Cool colors though!</span>
 
 ```{r}
 plotted<-ggplot(out, aes(V1, y = value, color = variable)) + 
@@ -153,6 +151,6 @@ data_vis2 <- data_vis + coord_flip()
 data_vis2
 ```
 
-
+<span style="color: green;">Something to think about: is there an advantage to this figure over just looking at the regression coefficients?</span>
 
 
